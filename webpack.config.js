@@ -235,6 +235,8 @@ if ( isDevelopment ) {
 
 	webpackConfig.plugins.push( new webpack.HotModuleReplacementPlugin() );
 	webpackConfig.entry.build.unshift( 'webpack-hot-middleware/client' );
+
+	webpackConfig.devServer = { hot: true, inline: true };
 }
 
 if ( ! config.isEnabled( 'desktop' ) ) {
