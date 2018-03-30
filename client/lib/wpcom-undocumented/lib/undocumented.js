@@ -2471,30 +2471,30 @@ Undocumented.prototype.getFeaturedPlugins = function( fn ) {
 };
 
 /**
- * Fetch a nonce to use in the `updateSiteName` call
+ * Fetch a nonce to use in the `changeSiteAddress` call
  * @param {int}   siteId  The ID of the site for which to get a nonce.
  * @returns {Promise}     A promise
  */
-Undocumented.prototype.getRequestSiteRenameNonce = function( siteId ) {
+Undocumented.prototype.getSiteAddressChangeNonce = function( siteId ) {
 	return this.wpcom.req.get( {
-		path: `/sites/${ siteId }/site-rename/nonce`,
+		path: `/sites/${ siteId }/site-address-change/nonce`,
 		apiNamespace: 'wpcom/v2',
 	} );
 };
 
 /**
- * Request a new .wordpress.com subdomain change with the option to discard the current.
+ * Request a new .wordpress.com subdomain for the specified site with the option to discard the current.
  *
- * @param {int} [siteId] The siteId for which to rename
+ * @param {int} [siteId] The siteId for which to change the address
  * @param {object} [blogname]	The desired new subdomain
  * @param {bool} [discard]			Should the old blog name be discarded?
  * @param {string} [nonce]		A nonce provided by the API
  * @returns {Promise}  A promise
  */
-Undocumented.prototype.updateSiteName = function( siteId, blogname, discard, nonce ) {
+Undocumented.prototype.changeSiteAddress = function( siteId, blogname, discard, nonce ) {
 	return this.wpcom.req.post(
 		{
-			path: `/sites/${ siteId }/site-rename`,
+			path: `/sites/${ siteId }/site-address-change`,
 			apiNamespace: 'wpcom/v2',
 		},
 		{},
@@ -2505,7 +2505,7 @@ Undocumented.prototype.updateSiteName = function( siteId, blogname, discard, non
 Undocumented.prototype.checkSiteAddressValidation = function( siteId, siteAddress ) {
 	return this.wpcom.req.post(
 		{
-			path: `/sites/${ siteId }/site-rename/validation`,
+			path: `/sites/${ siteId }/site-address-change/validate`,
 			apiNamespace: 'wpcom/v2',
 		},
 		{},
