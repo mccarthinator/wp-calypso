@@ -386,9 +386,9 @@ sections.push( {
 } );
 
 sections.push( {
-	name: 'happychat',
+	name: 'chat',
 	paths: [ '/me/chat' ],
-	module: 'me/happychat',
+	module: 'me/chat',
 	group: 'me',
 	secondary: true,
 } );
