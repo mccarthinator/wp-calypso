@@ -12,13 +12,13 @@ import { translate } from 'i18n-calypso';
  */
 import config from 'config';
 import controller from 'me/controller';
-import Happychat from './main';
+import HappychatPage from './main';
 import { setDocumentHeadTitle } from 'state/document-head/actions';
 import { makeLayout, render as clientRender } from 'controller';
 
 const renderChat = ( context, next ) => {
 	context.store.dispatch( setDocumentHeadTitle( translate( 'Chat', { textOnly: true } ) ) );
-	context.primary = <Happychat />;
+	context.primary = <HappychatPage />;
 	next();
 };
 
