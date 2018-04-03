@@ -1,17 +1,15 @@
-/**
- * /*
- * 	External Deps
- *
- * @format
- */
+/** @format */
 
+/**
+ * External dependencies
+ */
 import React from 'react';
 import page from 'page';
 import { translate } from 'i18n-calypso';
 
-/*
-	Internal deps
-*/
+/**
+ * Internal dependencies
+ */
 import config from 'config';
 import controller from 'me/controller';
 import Happychat from './main';
