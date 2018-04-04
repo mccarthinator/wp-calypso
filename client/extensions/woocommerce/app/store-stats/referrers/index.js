@@ -23,7 +23,9 @@ import Module from 'woocommerce/app/store-stats/store-stats-module';
 import SearchCard from 'components/search-card';
 import StoreStatsReferrerWidget from 'woocommerce/app/store-stats/store-stats-referrer-widget';
 import { sortBySales } from 'woocommerce/app/store-stats/referrers/helpers';
-import { getStoreReferrers } from 'state/selectors';
+import { getStoreReferrersByDate, getStoreReferrersByReferrer } from 'state/selectors';
+import Chart from './chart';
+import { UNITS } from 'woocommerce/app/store-stats/constants';
 
 const STAT_TYPE = 'statsStoreReferrers';
 const LIMIT = 10;
@@ -94,7 +96,16 @@ class Referrers extends Component {
 	}
 
 	render() {
-		const { siteId, query, selectedDate, unit, slug, translate, queryParams } = this.props;
+		const {
+			siteId,
+			query,
+			selectedDate,
+			unit,
+			slug,
+			translate,
+			queryParams,
+			periodData,
+		} = this.props;
 		const {
 			filter,
 			filteredSortedData,
@@ -107,6 +118,7 @@ class Referrers extends Component {
 		const title = `${ translate( 'Store Referrers' ) }${
 			queryParams.referrer ? ' - ' + queryParams.referrer : ''
 		}`;
+		const chartFormat = UNITS[ unit ].chartFormat;
 		return (
 			<Main className="referrers woocommerce" wideLayout>
 				{ siteId && <QuerySiteStats statType={ STAT_TYPE } siteId={ siteId } query={ query } /> }
@@ -120,6 +132,20 @@ class Referrers extends Component {
 					title={ title }
 					queryParams={ queryParams }
 				/>
+				<Module
+					className="referrers__chart"
+					siteId={ siteId }
+					emptyMessage={ translate( 'No data found' ) }
+					query={ query }
+					statType={ STAT_TYPE }
+				>
+					<Chart
+						data={ periodData }
+						unitSelectedDate={ unitSelectedDate }
+						selectedReferrer={ selectedReferrer && selectedReferrer.referrer }
+						chartFormat={ chartFormat }
+					/>
+				</Module>
 				<Module
 					className="referrers__search"
 					siteId={ siteId }
@@ -152,36 +178,28 @@ class Referrers extends Component {
 						selectedReferrer={ selectedReferrer && selectedReferrer.referrer }
 					/>
 				</Module>
-				{ selectedReferrer && (
-					<table>
-						<tbody>
-							<tr key={ selectedReferrer.referrer }>
-								<td>{ selectedReferrer.date }</td>
-								<td>{ selectedReferrer.referrer }</td>
-								<td>{ selectedReferrer.product_views }</td>
-								<td>{ selectedReferrer.add_to_carts }</td>
-								<td>{ selectedReferrer.product_purchases }</td>
-								<td>${ selectedReferrer.sales }</td>
-							</tr>
-						</tbody>
-					</table>
-				) }
 				<JetpackColophon />
 			</Main>
 		);
 	}
 }
 
-export default connect( ( state, { query, selectedDate, unit } ) => {
+export default connect( ( state, { query, selectedDate, unit, queryParams } ) => {
 	const siteId = getSelectedSiteId( state );
 	return {
 		slug: getSelectedSiteSlug( state ),
 		siteId,
-		data: getStoreReferrers( state, {
+		data: getStoreReferrersByDate( state, {
 			query,
 			siteId,
 			statType: STAT_TYPE,
 			unitSelectedDate: getUnitPeriod( selectedDate, unit ),
+		} ),
+		periodData: getStoreReferrersByReferrer( state, {
+			siteId,
+			statType: STAT_TYPE,
+			query,
+			queryParams,
 		} ),
 	};
 } )( localize( Referrers ) );

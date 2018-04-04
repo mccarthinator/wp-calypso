@@ -20,7 +20,7 @@ import Card from 'components/card';
 import ErrorPanel from 'my-sites/stats/stats-error';
 import { getWidgetPath, formatValue } from 'woocommerce/app/store-stats/utils';
 import Pagination from 'components/pagination';
-import { getStoreReferrers } from 'state/selectors';
+import { getStoreReferrersByDate } from 'state/selectors';
 
 class StoreStatsReferrerWidget extends Component {
 	static propTypes = {
@@ -180,6 +180,6 @@ class StoreStatsReferrerWidget extends Component {
 export default connect( ( state, ownProps ) => {
 	const { fetchedData } = ownProps;
 	return {
-		data: fetchedData || getStoreReferrers( state, ownProps ),
+		data: fetchedData || getStoreReferrersByDate( state, ownProps ),
 	};
 } )( localize( StoreStatsReferrerWidget ) );
