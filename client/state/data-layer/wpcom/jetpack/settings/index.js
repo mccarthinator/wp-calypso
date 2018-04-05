@@ -129,7 +129,7 @@ export const handleSaveSuccess = (
 
 export const announceSaveFailure = ( { dispatch }, { siteId } ) =>
 	dispatch(
-		errorNotice( translate( 'An unexpected error occurred. Please try again later.' ), {
+		errorNotice( translate( 'There was a problem saving your changes. Please try again.' ), {
 			id: `jpo-notice-error-${ siteId }`,
 			duration: 5000,
 		} )
