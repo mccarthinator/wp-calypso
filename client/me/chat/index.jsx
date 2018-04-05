@@ -12,7 +12,7 @@ import { translate } from 'i18n-calypso';
  */
 import config from 'config';
 import controller from 'me/controller';
-import HappychatPage from './main';
+import HappychatPage from 'blocks/happychat/chat-page';
 import { setDocumentHeadTitle } from 'state/document-head/actions';
 import { makeLayout, render as clientRender } from 'controller';
 
