@@ -2,7 +2,7 @@
 /**
  * External dependencies
  */
-import { noop } from 'lodash';
+import { includes, noop } from 'lodash';
 
 /**
  * Internal dependencies
@@ -10,6 +10,7 @@ import { noop } from 'lodash';
 import { dispatchRequestEx } from 'state/data-layer/wpcom-http/utils';
 import { http } from 'state/data-layer/wpcom-http/actions';
 import {
+	jetpackRemoteInstall,
 	jetpackRemoteInstallComplete,
 	jetpackRemoteInstallUpdateError,
 } from 'state/jetpack-remote-install/actions';
@@ -29,7 +30,7 @@ export const installJetpackPlugin = action =>
 		action
 	);
 
-export const handleResponse = ( { url }, data ) => {
+export const handleResponse = ( { url, user, password, retries }, data ) => {
 	const logToTracks = withAnalytics(
 		recordTracksEvent( 'calypso_jpc_remote_install_api_response', {
 			remote_site_url: url,
@@ -40,6 +41,13 @@ export const handleResponse = ( { url }, data ) => {
 	if ( data.status ) {
 		return logToTracks( jetpackRemoteInstallComplete( url ) );
 	}
+
+	if ( data.error && includes( data.error.message, 'timed out' ) ) {
+		if ( retries > 0 ) {
+			return jetpackRemoteInstall( url, user, password, retries - 1 );
+		}
+	}
+
 	return logToTracks( jetpackRemoteInstallUpdateError( url, data.error.code, data.error.message ) );
 };
 
