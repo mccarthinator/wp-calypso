@@ -31,6 +31,8 @@
 		"domains/cctlds/fr": true,
 		"domains/cctlds/uk": true,
 		"domains/kracken-ui": true,
+		"domains/kracken-ui/filters": false,
+		"domains/kracken-ui/pagination": false,
 		"external-media": true,
 		"external-media/google-photos": true,
 		"external-media/free-photo-library": true,
