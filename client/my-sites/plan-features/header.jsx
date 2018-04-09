@@ -133,7 +133,7 @@ class PlanFeaturesHeader extends Component {
 		// Note: Don't make this translatable because it's only visible to English-language users
 		return (
 			<span className="plan-features__header-credit-label">
-				{ site.jetpack ? 'Discount available' : 'Credit available' }
+				{ site.jetpack ? 'Discount' : 'Credit available' }
 			</span>
 		);
 	}
