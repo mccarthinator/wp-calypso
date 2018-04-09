@@ -33,8 +33,24 @@ export class FeaturedDomainSuggestions extends Component {
 		return pick( this.props, childKeys );
 	}
 
+	// TODO: Remove this before committing to master. This mocks match reasons into
+	//       domain suggestions for testing purposes.
+	getSuggestionsForTesting() {
+		const primarySuggestion = {
+			...this.props.primarySuggestion,
+			matchReasons: [ 'tld-exact', 'exact-match' ],
+		};
+		const secondarySuggestion = {
+			...this.props.secondarySuggestion,
+			matchReasons: [ 'similar-match', 'tld-common' ],
+		};
+		return { primarySuggestion, secondarySuggestion };
+	}
+
 	hasMatchReasons() {
-		const { primarySuggestion, secondarySuggestion } = this.props;
+		// TODO: Enable the following and remove use of getSuggestionsForTesting
+		// const { primarySuggestion, secondarySuggestion } = this.props;
+		const { primarySuggestion, secondarySuggestion } = this.getSuggestionsForTesting();
 		return (
 			Array.isArray( primarySuggestion.matchReasons ) ||
 			Array.isArray( secondarySuggestion.matchReasons )
@@ -42,7 +58,9 @@ export class FeaturedDomainSuggestions extends Component {
 	}
 
 	render() {
-		const { primarySuggestion, secondarySuggestion } = this.props;
+		// TODO: Enable the following and remove use of getSuggestionsForTesting
+		// const { primarySuggestion, secondarySuggestion } = this.props;
+		const { primarySuggestion, secondarySuggestion } = this.getSuggestionsForTesting();
 		const childProps = this.getChildProps();
 		const className = classNames( 'featured-domain-suggestions', {
 			'featured-domain-suggestions--has-match-reasons': this.hasMatchReasons(),
