@@ -106,7 +106,6 @@ class App extends Component {
 			isDashboard,
 			isSetupComplete,
 			pluginsLoaded,
-			translate,
 		} = this.props;
 		if ( ! pluginsLoaded ) {
 			return this.renderPlaceholder();
@@ -118,9 +117,7 @@ class App extends Component {
 		}
 
 		if ( pluginsLoaded && ! allRequiredPluginsActive ) {
-			return (
-				<RequiredPluginsInstallView title={ translate( 'Updating your store' ) } skipConfirmation />
-			);
+			return <RequiredPluginsInstallView fixMode skipConfirmation />;
 		}
 
 		return children;
