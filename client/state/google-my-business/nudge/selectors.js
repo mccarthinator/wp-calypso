@@ -11,6 +11,7 @@ import { last } from 'lodash';
 import createSelector from 'lib/create-selector';
 import { getPreference } from 'state/preferences/selectors';
 import { getSiteOption, getSitePlanSlug } from 'state/sites/selectors';
+import { isGoogleMyBusinessLocationConnected } from 'state/google-my-business/selectors';
 import { planMatches } from 'lib/plans';
 import { TYPE_BUSINESS, GROUP_WPCOM } from 'lib/plans/constants';
 
@@ -119,6 +120,10 @@ export const siteHasBusinessPlan = createSelector(
  * @return {Boolean} True if we should show the nudge
  */
 export const isGoogleMyBusinessStatsNudgeVisible = ( state, siteId ) => {
+	if ( isGoogleMyBusinessLocationConnected( state, siteId ) ) {
+		return false;
+	}
+
 	const createdAt = getSiteOption( state, siteId, 'created_at' );
 	const isWeekPassedSinceSiteCreation = Date.parse( createdAt ) + WEEK_IN_SECONDS * 1000 < Date.now();
 
