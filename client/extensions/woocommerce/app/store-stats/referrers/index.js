@@ -196,7 +196,7 @@ export default connect( ( state, { query, selectedDate, unit, queryParams } ) =>
 			query,
 			siteId,
 			statType: STAT_TYPE,
-			selectedDate: getEndPeriod( selectedDate, unit ),
+			endSelectedDate: getEndPeriod( selectedDate, unit ),
 		} ),
 		periodData: getStoreReferrersByReferrer( state, {
 			siteId,
