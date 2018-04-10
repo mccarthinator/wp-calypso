@@ -30,7 +30,7 @@ import {
 	topCategories,
 	topCoupons,
 } from 'woocommerce/app/store-stats/constants';
-import { getUnitPeriod, getEndPeriod, getQueries, getWidgetPath } from './utils';
+import { getEndPeriod, getQueries, getWidgetPath } from './utils';
 import QuerySiteStats from 'components/data/query-site-stats';
 import config from 'config';
 import StoreStatsReferrerWidget from './store-stats-referrer-widget';
@@ -47,7 +47,6 @@ class StoreStats extends Component {
 
 	render() {
 		const { path, queryDate, selectedDate, siteId, slug, unit, queryParams } = this.props;
-		const unitSelectedDate = getUnitPeriod( selectedDate, unit );
 		const endSelectedDate = getEndPeriod( selectedDate, unit );
 		const { orderQuery, referrerQuery } = getQueries( unit, queryDate );
 		const { topListQuery } = getQueries( unit, selectedDate );
@@ -123,7 +122,7 @@ class StoreStats extends Component {
 								siteId={ siteId }
 								query={ referrerQuery }
 								statType="statsStoreReferrers"
-								unitSelectedDate={ unitSelectedDate }
+								endSelectedDate={ endSelectedDate }
 								limit={ 5 }
 								pageType="orders"
 							/>

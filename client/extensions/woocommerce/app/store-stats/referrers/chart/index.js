@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { findIndex } from 'lodash';
+import page from 'page';
 
 /**
  * Internal dependencies
@@ -17,6 +18,7 @@ import ElementChart from 'components/chart';
 import Legend from 'components/chart/legend';
 import Tabs from 'my-sites/stats/stats-tabs';
 import Tab from 'my-sites/stats/stats-tabs/tab';
+import { getWidgetPath } from 'woocommerce/app/store-stats/utils';
 
 const tabs = [
 	{ label: 'Sales', attr: 'sales', gridicon: 'money' },
@@ -28,17 +30,23 @@ const tabs = [
 class Chart extends Component {
 	static propTypes = {
 		data: PropTypes.array.isRequired,
-		unitSelectedDate: PropTypes.string,
+		selectedDate: PropTypes.string,
 		selectedReferrer: PropTypes.string,
+		chartFormat: PropTypes.string,
 	};
 
 	state = {
 		selectedTabIndex: 0,
 	};
 
-	barClick() {}
-
 	legendClick() {}
+
+	barClick = bar => {
+		const { unit, slug, queryParams } = this.props;
+		const query = Object.assign( {}, queryParams, { startDate: bar.date } );
+		const path = getWidgetPath( unit, slug, query );
+		page( `/store/stats/referrers${ path }` );
+	};
 
 	tabClick = tab => {
 		this.setState( {
@@ -47,25 +55,26 @@ class Chart extends Component {
 	};
 
 	buildChartData = item => {
-		const { unitSelectedDate, chartFormat } = this.props;
+		const { selectedDate, chartFormat } = this.props;
 		const selectedTab = tabs[ this.state.selectedTabIndex ];
 		const className = classnames( {
-			'is-selected': item.date === unitSelectedDate,
+			'is-selected': item.date === selectedDate,
 		} );
 		return {
 			label: item[ chartFormat ],
 			value: item.data[ selectedTab.attr ] || 0,
 			data: item.data,
+			date: item.date,
 			className,
 		};
 	};
 
 	render() {
-		const { data, unitSelectedDate } = this.props;
+		const { data, selectedDate } = this.props;
 		const chartData = data.map( this.buildChartData );
 		const { selectedTabIndex } = this.state;
 		// const selectedTab = tabs[ selectedTabIndex ];
-		const selectedIndex = findIndex( data, d => d.date === unitSelectedDate );
+		const selectedIndex = findIndex( data, d => d.date === selectedDate );
 		return (
 			<Card className="stats-module">
 				<Legend

@@ -15,7 +15,7 @@ import { localize } from 'i18n-calypso';
  */
 import QuerySiteStats from 'components/data/query-site-stats';
 import { getSelectedSiteId, getSelectedSiteSlug } from 'state/ui/selectors';
-import { getUnitPeriod } from 'woocommerce/app/store-stats/utils';
+import { getEndPeriod } from 'woocommerce/app/store-stats/utils';
 import StoreStatsPeriodNav from 'woocommerce/app/store-stats/store-stats-period-nav';
 import JetpackColophon from 'components/jetpack-colophon';
 import Main from 'components/main';
@@ -113,7 +113,7 @@ class Referrers extends Component {
 			selectedReferrer,
 			selectedReferrerIndex,
 		} = this.state;
-		const unitSelectedDate = getUnitPeriod( selectedDate, unit );
+		const endSelectedDate = getEndPeriod( selectedDate, unit );
 		const showSearch = unfilteredDataLength > LIMIT;
 		const title = `${ translate( 'Store Referrers' ) }${
 			queryParams.referrer ? ' - ' + queryParams.referrer : ''
@@ -141,9 +141,12 @@ class Referrers extends Component {
 				>
 					<Chart
 						data={ periodData }
-						unitSelectedDate={ unitSelectedDate }
+						selectedDate={ endSelectedDate }
 						selectedReferrer={ selectedReferrer && selectedReferrer.referrer }
 						chartFormat={ chartFormat }
+						unit={ unit }
+						slug={ slug }
+						queryParams={ queryParams }
 					/>
 				</Module>
 				<Module
@@ -168,7 +171,7 @@ class Referrers extends Component {
 						siteId={ siteId }
 						query={ query }
 						statType={ STAT_TYPE }
-						unitSelectedDate={ unitSelectedDate }
+						endSelectedDate={ endSelectedDate }
 						queryParams={ queryParams }
 						slug={ slug }
 						limit={ LIMIT }
@@ -193,7 +196,7 @@ export default connect( ( state, { query, selectedDate, unit, queryParams } ) =>
 			query,
 			siteId,
 			statType: STAT_TYPE,
-			unitSelectedDate: getUnitPeriod( selectedDate, unit ),
+			selectedDate: getEndPeriod( selectedDate, unit ),
 		} ),
 		periodData: getStoreReferrersByReferrer( state, {
 			siteId,
