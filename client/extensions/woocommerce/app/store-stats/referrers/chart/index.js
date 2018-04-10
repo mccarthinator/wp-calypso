@@ -73,6 +73,8 @@ class Chart extends Component {
 				{ data.length && (
 					<Tabs data={ chartData }>
 						{ tabs.map( ( tab, index ) => {
+							const item = chartData[ selectedIndex ].data;
+							const value = item[ tab.attr ];
 							return (
 								<Tab
 									key={ tab.attr }
@@ -80,7 +82,7 @@ class Chart extends Component {
 									selected={ index === selectedTabIndex }
 									tabClick={ this.tabClick }
 									gridicon={ tab.gridicon }
-									value={ chartData[ selectedIndex ].data[ tab.attr ] }
+									value={ value }
 								/>
 							);
 						} ) }
