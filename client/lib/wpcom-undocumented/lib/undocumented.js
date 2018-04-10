@@ -2231,7 +2231,7 @@ Undocumented.prototype.getExport = function( siteId, exportId, fn ) {
 Undocumented.prototype.getSiteConnectInfo = function( targetUrl, filters ) {
 	const { host, path, protocol } = url.parse( targetUrl );
 	let endpointUrl = `/connect/site-info/${ protocol.slice( 0, -1 ) }/${ host }`;
-	let params = {
+	const params = {
 		filters: filters,
 		apiVersion: '1.1',
 	};
