@@ -102,4 +102,12 @@ export default {
 		defaultVariation: 'group_0',
 		allowExistingUsers: true,
 	},
+	showMoneyBackGuarantee: {
+		datestamp: '20180409',
+		variations: {
+			no: 1,
+			yes: 1,
+		},
+		defaultVariation: 'no',
+	},
 };
