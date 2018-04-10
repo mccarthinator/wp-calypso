@@ -2224,9 +2224,9 @@ Undocumented.prototype.getExport = function( siteId, exportId, fn ) {
 /**
  * Check different info about WordPress and Jetpack status on a url
  *
- * @param {String} targetUrl - The url of the site to check
- * @param {String} filters - Comma separated string with the filters to run
- * @returns {Promise}  promise
+ * @param  {string}   targetUrl The url of the site to check
+ * @param  {string}   filters   Comma separated string with the filters to run
+ * @return {Promise}  promise
  */
 Undocumented.prototype.getSiteConnectInfo = function( targetUrl, filters ) {
 	const { host, path, protocol } = url.parse( targetUrl );
@@ -2248,7 +2248,8 @@ Undocumented.prototype.getSiteConnectInfo = function( targetUrl, filters ) {
  * A JSON object is returned with the XML given as a String
  * in the `opml` field.
  *
- * @param {Function} fn           The callback function
+ * @param  {Function} fn           The callback function
+ * @return {Promise}  promise
  */
 Undocumented.prototype.exportReaderFeed = function( fn ) {
 	debug( '/read/following/mine/export' );
