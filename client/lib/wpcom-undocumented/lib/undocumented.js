@@ -2229,15 +2229,15 @@ Undocumented.prototype.getExport = function( siteId, exportId, fn ) {
  * @returns {Promise}  promise
  */
 Undocumented.prototype.getSiteConnectInfo = function( targetUrl, filters ) {
-	const parsedUrl = url.parse( targetUrl );
-	let endpointUrl = `/connect/site-info/${ parsedUrl.protocol.slice( 0, -1 ) }/${ parsedUrl.host }`;
+	const { host, path, protocol } = url.parse( targetUrl );
+	let endpointUrl = `/connect/site-info/${ protocol.slice( 0, -1 ) }/${ host }`;
 	let params = {
 		filters: filters,
 		apiVersion: '1.1',
 	};
 
-	if ( parsedUrl.path && parsedUrl.path !== '/' ) {
-		endpointUrl += parsedUrl.path.replace( /\//g, '::' );
+	if ( path && path !== '/' ) {
+		endpointUrl += path.replace( /\//g, '::' );
 	}
 
 	return this.wpcom.req.get( `${ endpointUrl }`, params );
