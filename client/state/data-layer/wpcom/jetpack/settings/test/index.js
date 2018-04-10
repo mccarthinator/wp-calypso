@@ -210,7 +210,7 @@ describe( 'saveJetpackSettings()', () => {
 	};
 
 	const getState = () => ( {
-		jetpackOnboarding: { settings: { [ 12345678 ]: previousSettings } },
+		jetpack: { settings: { [ 12345678 ]: previousSettings } },
 	} );
 
 	const action = {
@@ -234,7 +234,7 @@ describe( 'saveJetpackSettings()', () => {
 						json: true,
 					},
 				},
-				{ ...action, meta: { ...action.meta, settings: previousSettings.onboarding } }
+				{ ...action, meta: { ...action.meta, settings: previousSettings } }
 			)
 		);
 		expect( dispatch ).toHaveBeenCalledWith(
