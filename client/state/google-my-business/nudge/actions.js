@@ -7,7 +7,7 @@ import { getPreference } from 'state/preferences/selectors';
 import { getSelectedSiteId } from 'state/ui/selectors';
 import { savePreference } from 'state/preferences/actions';
 
-const recordDismissAction = type => ( dispatch, getState ) => {
+export const dismissNudge = () => ( dispatch, getState ) => {
 	const siteId = getSelectedSiteId( getState() );
 	const preference = getPreference( getState(), 'google-my-business-dismissible-nudge' ) || {};
 
@@ -19,14 +19,10 @@ const recordDismissAction = type => ( dispatch, getState ) => {
 					...( preference[ siteId ] || [] ),
 					{
 						dismissedAt: Date.now(),
-						type,
+						type: 'dismiss',
 					},
 				],
 			} )
 		)
 	);
 };
-
-export const dismissNudge = () => recordDismissAction( 'dismiss' );
-
-export const alreadyListed = () => recordDismissAction( 'already-listed' );
