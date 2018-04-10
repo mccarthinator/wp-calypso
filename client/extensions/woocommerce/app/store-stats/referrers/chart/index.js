@@ -57,7 +57,7 @@ class Chart extends Component {
 	buildChartData = item => {
 		const { selectedDate, chartFormat } = this.props;
 		const selectedTab = tabs[ this.state.selectedTabIndex ];
-		const className = classnames( {
+		const className = classnames( item.classNames.join( ' ' ), {
 			'is-selected': item.date === selectedDate,
 		} );
 		return {
