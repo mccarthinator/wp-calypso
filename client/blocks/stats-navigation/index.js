@@ -14,6 +14,7 @@ import NavItem from 'components/section-nav/item';
 import NavTabs from 'components/section-nav/tabs';
 import Intervals from './intervals';
 import FollowersCount from 'blocks/followers-count';
+import { isGoogleMyBusinessLocationConnected as isGoogleMyBusinessLocationConnectedSelector } from 'state/google-my-business/selectors';
 import { isSiteStore } from 'state/selectors';
 import { isJetpackSite } from 'state/sites/selectors';
 import { navItems, intervals as intervalConstants } from './constants';
@@ -22,6 +23,7 @@ import config from 'config';
 class StatsNavigation extends Component {
 	static propTypes = {
 		interval: PropTypes.oneOf( intervalConstants.map( i => i.value ) ),
+		isGoogleMyBusinessLocationConnected: PropTypes.bool.isRequired,
 		isStore: PropTypes.bool,
 		selectedItem: PropTypes.oneOf( Object.keys( navItems ) ).isRequired,
 		siteId: PropTypes.number,
@@ -29,7 +31,7 @@ class StatsNavigation extends Component {
 	};
 
 	isValidItem = item => {
-		const { isStore, isJetpack, siteId } = this.props;
+		const { isGoogleMyBusinessLocationConnected, isStore, isJetpack, siteId } = this.props;
 
 		switch ( item ) {
 			case 'store':
@@ -51,7 +53,7 @@ class StatsNavigation extends Component {
 					return false;
 				}
 
-				return config.isEnabled( 'google-my-business' );
+				return config.isEnabled( 'google-my-business' ) && isGoogleMyBusinessLocationConnected;
 
 			default:
 				return true;
@@ -93,6 +95,7 @@ class StatsNavigation extends Component {
 
 export default connect( ( state, { siteId } ) => {
 	return {
+		isGoogleMyBusinessLocationConnected: isGoogleMyBusinessLocationConnectedSelector( state, siteId ),
 		isStore: isSiteStore( state, siteId ),
 		isJetpack: isJetpackSite( state, siteId ),
 		siteId,
