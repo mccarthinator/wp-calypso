@@ -56,15 +56,25 @@ class Chart extends Component {
 
 	buildChartData = item => {
 		const { selectedDate, chartFormat } = this.props;
-		const selectedTab = tabs[ this.state.selectedTabIndex ];
+		const { selectedTabIndex } = this.state;
+		const selectedTab = tabs[ selectedTabIndex ];
 		const className = classnames( item.classNames.join( ' ' ), {
 			'is-selected': item.date === selectedDate,
 		} );
+		let nestedValue = null;
+		switch ( selectedTab.attr ) {
+			case 'product_views':
+				nestedValue = item.data.add_to_carts || 0;
+				break;
+			case 'add_to_carts':
+				nestedValue = item.data.product_purchases || 0;
+		}
 		return {
 			label: item[ chartFormat ],
 			value: item.data[ selectedTab.attr ] || 0,
 			data: item.data,
 			date: item.date,
+			nestedValue,
 			className,
 		};
 	};
