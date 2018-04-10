@@ -4,19 +4,19 @@
  * Internal Dependencies
  */
 import { getPreference } from 'state/preferences/selectors';
-import { savePreference } from 'state/preferences/actions';
 import { getSelectedSiteId } from 'state/ui/selectors';
+import { savePreference } from 'state/preferences/actions';
 
 const recordDismissAction = type => ( dispatch, getState ) => {
 	const siteId = getSelectedSiteId( getState() );
-	const nudgePreference = getPreference( getState(), 'google-my-business-dismissible-nudge' ) || {};
+	const preference = getPreference( getState(), 'google-my-business-dismissible-nudge' ) || {};
 
 	return dispatch(
 		savePreference(
 			'google-my-business-dismissible-nudge',
-			Object.assign( {}, nudgePreference, {
+			Object.assign( {}, preference, {
 				[ siteId ]: [
-					...( nudgePreference[ siteId ] || [] ),
+					...( preference[ siteId ] || [] ),
 					{
 						dismissedAt: Date.now(),
 						type,

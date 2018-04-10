@@ -20,8 +20,8 @@ import QueryPreferences from 'components/data/query-preferences';
 import {
 	isGoogleMyBusinessStatsNudgeDismissed,
 	getGoogleMyBusinessStatsNudgeDismissCount,
-} from 'state/selectors';
-import { dismissNudge } from './actions';
+} from 'state/google-my-business/nudge/selectors';
+import { dismissNudge } from 'state/google-my-business/nudge/actions';
 
 class GoogleMyBusinessStatsNudge extends Component {
 	static propTypes = {
