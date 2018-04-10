@@ -18,6 +18,13 @@ import Legend from 'components/chart/legend';
 import Tabs from 'my-sites/stats/stats-tabs';
 import Tab from 'my-sites/stats/stats-tabs/tab';
 
+const tabs = [
+	{ label: 'Sales', attr: 'sales', gridicon: 'money' },
+	{ label: 'Views', attr: 'product_views', gridicon: 'visible' },
+	{ label: 'Add to Carts', attr: 'add_to_carts', gridicon: 'cart' },
+	{ label: 'Purchases', attr: 'product_purchases', gridicon: 'star' },
+];
+
 class Chart extends Component {
 	static propTypes = {
 		data: PropTypes.array.isRequired,
@@ -31,18 +38,23 @@ class Chart extends Component {
 
 	barClick() {}
 
-	tabClick() {}
-
 	legendClick() {}
+
+	tabClick = tab => {
+		this.setState( {
+			selectedTabIndex: tab.index,
+		} );
+	};
 
 	buildChartData = item => {
 		const { unitSelectedDate, chartFormat } = this.props;
+		const selectedTab = tabs[ this.state.selectedTabIndex ];
 		const className = classnames( {
 			'is-selected': item.date === unitSelectedDate,
 		} );
 		return {
 			label: item[ chartFormat ],
-			value: item.data.sales || 0,
+			value: item.data[ selectedTab.attr ] || 0,
 			data: item.data,
 			className,
 		};
@@ -51,14 +63,8 @@ class Chart extends Component {
 	render() {
 		const { data, unitSelectedDate } = this.props;
 		const chartData = data.map( this.buildChartData );
-		const tabs = [
-			{ label: 'Sales', attr: 'sales', gridicon: 'money' },
-			{ label: 'Views', attr: 'product_views', gridicon: 'visible' },
-			{ label: 'Add to Carts', attr: 'add_to_carts', gridicon: 'cart' },
-			{ label: 'Purchases', attr: 'product_purchases', gridicon: 'star' },
-		];
 		const { selectedTabIndex } = this.state;
-		// const selectedTab = tabs[ selectedTabIndex ]; // will be useful for legend
+		// const selectedTab = tabs[ selectedTabIndex ];
 		const selectedIndex = findIndex( data, d => d.date === unitSelectedDate );
 		return (
 			<Card className="stats-module">
@@ -78,6 +84,7 @@ class Chart extends Component {
 							return (
 								<Tab
 									key={ tab.attr }
+									index={ index }
 									label={ tab.label }
 									selected={ index === selectedTabIndex }
 									tabClick={ this.tabClick }
