@@ -116,6 +116,7 @@ export default {
 		const siteSlug = context.params.site;
 
 		analytics.pageView.record( routePath, 'Checkout Pending', routeParams );
+
 		context.store.dispatch( setSection( { name: 'checkout-thank-you' }, { hasSidebar: false } ) );
 
 		context.primary = <CheckoutPendingComponent orderId={ orderId } siteSlug={ siteSlug } />;
