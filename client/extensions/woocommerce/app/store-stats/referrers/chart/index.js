@@ -20,14 +20,7 @@ import Tabs from 'my-sites/stats/stats-tabs';
 import Tab from 'my-sites/stats/stats-tabs/tab';
 import { getWidgetPath, formatValue } from 'woocommerce/app/store-stats/utils';
 import { recordTrack } from 'woocommerce/lib/analytics';
-
-// @TODO: place this in ../constants.js and translate
-const tabs = [
-	{ label: 'Sales', attr: 'sales', gridicon: 'money' },
-	{ label: 'Views', attr: 'product_views', gridicon: 'visible' },
-	{ label: 'Add to Carts', attr: 'add_to_carts', gridicon: 'cart' },
-	{ label: 'Purchases', attr: 'product_purchases', gridicon: 'star' },
-];
+import { referrerChartTabs as tabs } from 'woocommerce/app/store-stats/constants';
 
 class Chart extends Component {
 	static propTypes = {
@@ -99,7 +92,7 @@ class Chart extends Component {
 		// const selectedTab = tabs[ selectedTabIndex ];
 		const selectedIndex = findIndex( data, d => d.date === selectedDate );
 		return (
-			<Card className="stats-module">
+			<Card className="chart stats-module">
 				<Legend
 					activeTab={ tabs[ 0 ] }
 					availableCharts={ [] }
