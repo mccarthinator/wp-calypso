@@ -19,7 +19,9 @@ import Legend from 'components/chart/legend';
 import Tabs from 'my-sites/stats/stats-tabs';
 import Tab from 'my-sites/stats/stats-tabs/tab';
 import { getWidgetPath, formatValue } from 'woocommerce/app/store-stats/utils';
+import { recordTrack } from 'woocommerce/lib/analytics';
 
+// @TODO: place this in ../constants.js and translate
 const tabs = [
 	{ label: 'Sales', attr: 'sales', gridicon: 'money' },
 	{ label: 'Views', attr: 'product_views', gridicon: 'visible' },
@@ -52,6 +54,10 @@ class Chart extends Component {
 		this.setState( {
 			selectedTabIndex: tab.index,
 		} );
+
+		recordTrack( 'calypso_woocommerce_stats_referrers_chart_tab_click', {
+			tab: tabs[ tab.index ].attr,
+		} );
 	};
 
 	buildChartData = item => {
@@ -79,7 +85,7 @@ class Chart extends Component {
 		};
 	};
 
-	formatValue = ( isSales, currency ) => {
+	formatTabValue = ( isSales, currency ) => {
 		if ( isSales ) {
 			return value => formatValue( value, 'currency', currency, { precision: 0 } );
 		}
@@ -117,7 +123,7 @@ class Chart extends Component {
 									tabClick={ this.tabClick }
 									gridicon={ tab.gridicon }
 									value={ value }
-									format={ this.formatValue( isSales, item.currency ) }
+									format={ this.formatTabValue( isSales, item.currency ) }
 								/>
 							);
 						} ) }
