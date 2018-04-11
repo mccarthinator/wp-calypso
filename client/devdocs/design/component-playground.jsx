@@ -39,7 +39,7 @@ class ComponentPlayground extends Component {
 				<Button onClick={ this.onClick } borderless={ true }>
 					View Code <Gridicon icon="code" />
 				</Button>
-				<div className="code">
+				<div>
 					{ this.state.showCode && <LiveError /> }
 					{ this.state.showCode && <LiveEditor /> }
 				</div>
