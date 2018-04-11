@@ -148,12 +148,13 @@ export function getStartPeriod( date, unit ) {
  * @param {(string|number)} value - string or number to be formatted
  * @param {string} format - string of 'text', 'number' or 'currency'
  * @param {string} [code] - optional currency code
+ * @param {object} [options] - optional options to be passed to formatCurrency
  * @return {string|number} - formatted number or string value
  */
-export function formatValue( value, format, code ) {
+export function formatValue( value, format, code, options ) {
 	switch ( format ) {
 		case 'currency':
-			return formatCurrency( value, code );
+			return formatCurrency( value, code, options );
 		case 'number':
 			return Math.round( value * 100 ) / 100;
 		case 'percent':

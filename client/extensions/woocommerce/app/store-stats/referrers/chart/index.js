@@ -18,7 +18,7 @@ import ElementChart from 'components/chart';
 import Legend from 'components/chart/legend';
 import Tabs from 'my-sites/stats/stats-tabs';
 import Tab from 'my-sites/stats/stats-tabs/tab';
-import { getWidgetPath } from 'woocommerce/app/store-stats/utils';
+import { getWidgetPath, formatValue } from 'woocommerce/app/store-stats/utils';
 
 const tabs = [
 	{ label: 'Sales', attr: 'sales', gridicon: 'money' },
@@ -79,6 +79,13 @@ class Chart extends Component {
 		};
 	};
 
+	formatValue = ( isSales, currency ) => {
+		if ( isSales ) {
+			return value => formatValue( value, 'currency', currency, { precision: 0 } );
+		}
+		return value => formatValue( value, 'number' );
+	};
+
 	render() {
 		const { data, selectedDate } = this.props;
 		const chartData = data.map( this.buildChartData );
@@ -100,6 +107,7 @@ class Chart extends Component {
 						{ tabs.map( ( tab, index ) => {
 							const item = chartData[ selectedIndex ].data;
 							const value = item[ tab.attr ];
+							const isSales = tab.attr === 'sales';
 							return (
 								<Tab
 									key={ tab.attr }
@@ -109,6 +117,7 @@ class Chart extends Component {
 									tabClick={ this.tabClick }
 									gridicon={ tab.gridicon }
 									value={ value }
+									format={ this.formatValue( isSales, item.currency ) }
 								/>
 							);
 						} ) }
