@@ -250,45 +250,45 @@ class DesignAssets extends React.Component {
 
 		const code = `<Main>
     <HeaderCake actionText="Fun" actionIcon="status">Welcome to the Playground</HeaderCake>
-	<Button primary onClick={
-		function() {
-			alert( 'World' )
-		}
-	}>
-		<Gridicon icon="code" /> Hello
-	</Button>
-	<br /><hr /><br />
-	<ActionCard
-		headerText={ 'Change the code above' }
-		mainText={ 'The playground lets you drop in components and play with values. Its experiemental and likely will break.' }
-		buttonText={ 'WordPress' }
-		buttonIcon="external"
-		buttonPrimary={ false }
-		buttonHref="https://wordpress.com"
-		buttonTarget="_blank"
-	/>
-	<br /><hr /><br />
-	<JetpackLogo />
-  <SectionNav >
-    <NavTabs label="Status" selectedText="Published">
-        <NavItem path="/posts" selected={ true }>Published</NavItem>
-        <NavItem path="/posts/drafts" selected={ false }>Drafts</NavItem>
-        <NavItem path="/posts/scheduled" selected={ false }>Scheduled</NavItem>
-        <NavItem path="/posts/trashed" selected={ false }>Trashed</NavItem>
-    </NavTabs>
+  	<Button primary onClick={
+  		function() {
+  			alert( 'World' )
+  		}
+  	}>
+  		<Gridicon icon="code" /> Hello
+  	</Button>
+  	<br /><hr /><br />
+  	<ActionCard
+  		headerText={ 'Change the code above' }
+  		mainText={ 'The playground lets you drop in components and play with values. Its experiemental and likely will break.' }
+  		buttonText={ 'WordPress' }
+  		buttonIcon="external"
+  		buttonPrimary={ false }
+  		buttonHref="https://wordpress.com"
+  		buttonTarget="_blank"
+  	/>
+  	<br /><hr /><br />
+  	<JetpackLogo />
+    <SectionNav >
+      <NavTabs label="Status" selectedText="Published">
+          <NavItem path="/posts" selected={ true }>Published</NavItem>
+          <NavItem path="/posts/drafts" selected={ false }>Drafts</NavItem>
+          <NavItem path="/posts/scheduled" selected={ false }>Scheduled</NavItem>
+          <NavItem path="/posts/trashed" selected={ false }>Trashed</NavItem>
+      </NavTabs>
 
-    <NavSegmented label="Author">
-        <NavItem path="/posts/my" selected={ false }>Only Me</NavItem>
-        <NavItem path="/posts" selected={ true }>Everyone</NavItem>
-    </NavSegmented>
+      <NavSegmented label="Author">
+          <NavItem path="/posts/my" selected={ false }>Only Me</NavItem>
+          <NavItem path="/posts" selected={ true }>Everyone</NavItem>
+      </NavSegmented>
 
-    <Search
-        pinned
-        fitsContainer
-        placeholder="Search Published..."
-        delaySearch={ true }
-    />
-  </SectionNav>
+      <Search
+          pinned
+          fitsContainer
+          placeholder="Search Published..."
+          delaySearch={ true }
+      />
+    </SectionNav>
 </Main>`;
 
 		return (
